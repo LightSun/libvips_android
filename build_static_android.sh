@@ -3,7 +3,7 @@
 set -e
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
-NDK=~/Android/Sdk/ndk-bundle
+NDK=/home/heaven7/study/android/android-ndk-r21d
 HOST_TAG=linux-x86_64
 INSTALL_DIR="$(pwd)/build"
 
@@ -42,6 +42,7 @@ function build_for_arch() {
 		${LP}/libvips.a \
 		-lm \
 		-pthread \
+        ${LP}/libgio-2.0.a \
 		${LP}/libgmodule-2.0.a \
 		${LP}/libgobject-2.0.a \
 		${LP}/libffi.a \
@@ -59,7 +60,7 @@ function build_for_arch() {
 
 
 
-build_for_arch armv7a-linux-androideabi 16 arm-linux-androideabi
-#build_for_arch aarch64-linux-android 21 aarch64-linux-android
+#build_for_arch armv7a-linux-androideabi 16 arm-linux-androideabi
+build_for_arch aarch64-linux-android 21 aarch64-linux-android
 #build_for_arch i686-linux-android 16 i686-linux-android
 #build_for_arch x86_64-linux-android 21 x86_64-linux-android

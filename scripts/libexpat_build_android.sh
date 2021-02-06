@@ -3,12 +3,14 @@
 set -e
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
-NDK=~/Android/Sdk/ndk-bundle
+NDK=/home/heaven7/study/android/android-ndk-r21d
 HOST_TAG=linux-x86_64
 INSTALL_FOLDER="$(pwd)/../build"
 
 cd "../libs/libexpat"
 
+# need install apt install docbook2x
+#              apt install docbook-to-man
 function build_for_arch() {
 	if ! test -e build/${1}; then
 		export CFLAGS="$CFLAGS -fPIC -O2"
@@ -21,7 +23,7 @@ function build_for_arch() {
 		export LD=$TOOLCHAIN/bin/${3}-ld
 		export RANLIB=$TOOLCHAIN/bin/${3}-ranlib
 		export STRIP=$TOOLCHAIN/bin/${3}-strip
-		./configure "--prefix=${INSTALL_FOLDER}/${1}/install/usr/local" --host ${1} \
+    ./configure "--prefix=${INSTALL_FOLDER}/${1}/install/usr/local" --host ${1} \
 			--disable-shared \
 			--enable-static
 		make -j4

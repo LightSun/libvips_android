@@ -3,13 +3,13 @@
 set -e
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
-
-NDK=~/Android/Sdk/ndk-bundle
+NDK=/home/heaven7/study/android/android-ndk-r21d
 HOST_TAG=linux-x86_64
 INSTALL_DIR="$(pwd)/../build"
 
 cd "../libs/libvips"
 
+# need install gobject-introspection (for autogen.sh)
 function build_for_arch() {
 	if ! test -e build/${1}; then
 		#export CFLAGS="$CFLAGS -fPIC -O2 -flto"
@@ -30,10 +30,12 @@ function build_for_arch() {
 		export PKG_CONFIG_PATH=${fake_sysroot}/usr/local/lib/pkgconfig
 		#--disable-shared \
 		#--enable-static \
+        echo ${1}
+        ./autogen.sh --host ${1}
 		./configure \
 			"--prefix=${fake_sysroot}/usr/local" \
+            --host ${1} \
 			"--with-sysroot=${NDK}/sysroot" \
-			--host ${1} \
 			"--with-expat=${fake_sysroot}/usr/local" \
 			"--with-zlib=${NDK}/sysroot" \
 			"--with-png-includes=${fake_sysroot}/usr/local/include" \
@@ -64,11 +66,12 @@ function build_for_arch() {
 		make -j4
 		mkdir -p build/${1}
 		make install
-		make distclean
+        #sleep 1s
+		make distclean #可能报错
 	fi
 }
 
-build_for_arch armv7a-linux-androideabi 16 arm-linux-androideabi
+#build_for_arch armv7a-linux-androideabi 16 arm-linux-androideabi
 build_for_arch aarch64-linux-android 21 aarch64-linux-android
-build_for_arch i686-linux-android 16 i686-linux-android
-build_for_arch x86_64-linux-android 21 x86_64-linux-android
+#build_for_arch i686-linux-android 16 i686-linux-android
+#build_for_arch x86_64-linux-android 21 x86_64-linux-android

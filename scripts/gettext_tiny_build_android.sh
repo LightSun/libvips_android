@@ -3,7 +3,7 @@
 set -e
 cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null 2>&1
 
-NDK=~/Android/Sdk/ndk-bundle
+NDK=/home/heaven7/study/android/android-ndk-r21d
 HOST_TAG=linux-x86_64
 INSTALL_FOLDER="$(pwd)/../build"
 

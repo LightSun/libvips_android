@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <vips/vips.h>
 
-#include "missing_symbols_fix.c"
+//#include "missing_symbols_fix.c"
 
 int main(int argc, char **argv) {
   VipsImage *in;
